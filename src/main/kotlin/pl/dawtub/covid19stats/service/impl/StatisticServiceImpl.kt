@@ -11,6 +11,7 @@ import pl.dawtub.covid19stats.repository.DeathRepository
 import pl.dawtub.covid19stats.repository.RegionRepository
 import pl.dawtub.covid19stats.repository.StatisticRepository
 import pl.dawtub.covid19stats.repository.TestRepository
+import pl.dawtub.covid19stats.repository.specification.RegionFilter.byName
 import pl.dawtub.covid19stats.repository.specification.StatisticFilter.withQuery
 import pl.dawtub.covid19stats.repository.specification.StatisticFilter.withRegionName
 import pl.dawtub.covid19stats.service.ImportService
@@ -26,8 +27,12 @@ internal class StatisticServiceImpl(
     val testRepository: TestRepository,
     val importService: ImportService
 ) : StatisticService {
+    object Const {
+        const val COUNTRY = "cały kraj"
+    }
+
     override fun findAll(): List<Statistic> {
-        return statisticRepository.findAll(withRegionName("cały kraj"))
+        return statisticRepository.findAll(withRegionName(COUNTRY))
     }
 
     override fun findAllWithQuery(query: StatisticQuery): List<Statistic> {
@@ -61,7 +66,7 @@ internal class StatisticServiceImpl(
                             it.testsOther
                         )
                     ),
-                    regionRepository.findByName(it.region.lowercase()),
+                    regionRepository.findOne(byName(it.region)).get(),
                 )
             )
         }

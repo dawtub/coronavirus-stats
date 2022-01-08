@@ -14,7 +14,7 @@ object StatisticFilter {
     fun withRegionName(name: String): Specification<Statistic> =
         Specification { root: Root<Statistic>, _, cb ->
             val join: Join<Statistic, Region> = root.join("region")
-            cb.equal(join.get(Region_.name), name)
+            cb.equal(join.get(Region_.name), name.lowercase())
         }
 
     fun isInDateRange(startDate: LocalDate, endDate: LocalDate): Specification<Statistic> =
