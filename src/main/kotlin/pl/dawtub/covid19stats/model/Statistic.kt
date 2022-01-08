@@ -10,7 +10,10 @@ data class Statistic(
     val datestamp: LocalDate,
 
     @Column
-    val infections: Long,
+    val infections: Int,
+
+    @Column
+    val healths: Int,
 
     @OneToOne
     @JoinColumn(name = "deathsId")

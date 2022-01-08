@@ -12,7 +12,7 @@ data class StatisticRowCsv(
     @JsonProperty("liczba_na_10_tys_mieszkancow")
     val amountFor10: String,
     @JsonProperty("liczba_przypadkow")
-    val infections: Long,
+    val infections: Int,
     @JsonProperty("zgony")
     val deaths: Int,
     @JsonProperty("zgony_w_wyniku_covid_bez_chorob_wspolistniejacych")
@@ -20,9 +20,9 @@ data class StatisticRowCsv(
     @JsonProperty("zgony_w_wyniku_covid_i_chorob_wspolistniejacych")
     val deathsCovidOther: Int,
     @JsonProperty("liczba_zlecen_poz")
-    val pozOrders: Long,
+    val pozOrders: Int,
     @JsonProperty("liczba_osob_objetych_kwarantanna")
-    val quarantines: Long,
+    val quarantines: Int,
     @JsonProperty("liczba_wykonanych_testow")
     val tests: Int,
     @JsonProperty("liczba_testow_z_wynikiem_pozytywnym")
@@ -32,5 +32,5 @@ data class StatisticRowCsv(
     @JsonProperty("liczba_pozostalych_testow")
     val testsOther: Int,
     @JsonProperty("liczba_ozdrowiencow")
-    val amountOfHealth: Long,
+    val amountOfHealth: Int,
 )

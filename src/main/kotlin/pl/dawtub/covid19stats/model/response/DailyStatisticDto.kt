@@ -4,7 +4,8 @@ import java.time.LocalDate
 
 data class DailyStatisticDto(
     val datestamp: LocalDate,
-    val infections: Long,
+    val infections: Int,
+    val health: Int,
     val deaths: Int,
     val tests: Int,
 )
