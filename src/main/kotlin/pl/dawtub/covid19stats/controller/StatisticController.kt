@@ -10,7 +10,6 @@ import pl.dawtub.covid19stats.model.request.StatisticQuery
 import pl.dawtub.covid19stats.model.response.DailyStatisticDto
 import pl.dawtub.covid19stats.model.response.DetailedDailyStatisticDto
 import pl.dawtub.covid19stats.service.StatisticService
-import java.time.LocalDate
 
 @RequestMapping("/stats")
 @RestController
@@ -31,6 +30,24 @@ internal class StatisticController(
                 )
             }
             .toList()
+
+    @GetMapping("/daily")
+    fun getDailyStatistics(): DetailedDailyStatisticDto {
+        val daily = statisticService.findDaily()
+        return DetailedDailyStatisticDto(
+            daily.datestamp,
+            daily.region.name,
+            daily.infections,
+            daily.healths,
+            daily.deaths.deathAmount,
+            daily.deaths.deathCovidOnly,
+            daily.deaths.deathCovidOther,
+            daily.tests.testAmount,
+            daily.tests.testPositives,
+            daily.tests.testNegatives,
+            daily.tests.testOther
+        )
+    }
 
     @GetMapping("/search")
     fun getFilteredStatistics(

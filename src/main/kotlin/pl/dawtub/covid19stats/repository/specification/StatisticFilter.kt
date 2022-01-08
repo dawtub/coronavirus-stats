@@ -6,7 +6,6 @@ import pl.dawtub.covid19stats.model.Region_
 import pl.dawtub.covid19stats.model.Statistic
 import pl.dawtub.covid19stats.model.Statistic_
 import pl.dawtub.covid19stats.model.request.StatisticQuery
-import java.time.LocalDate
 import javax.persistence.criteria.Join
 import javax.persistence.criteria.Root
 
@@ -17,11 +16,6 @@ object StatisticFilter {
             cb.equal(join.get(Region_.name), name.lowercase())
         }
 
-    fun isInDateRange(startDate: LocalDate, endDate: LocalDate): Specification<Statistic> =
-        Specification { root: Root<Statistic>, _, cb ->
-            cb.between(root.get(Statistic_.datestamp), startDate, endDate)
-        }
-
     fun withQuery(query: StatisticQuery): Specification<Statistic> =
         Specification { root: Root<Statistic>, _, cb ->
             var conditions = cb.conjunction()
@@ -30,14 +24,14 @@ object StatisticFilter {
                 conditions = cb.and(conditions, cb.equal(join.get(Region_.name), query.region))
             }
 
-            if (!query.startDate.isNullOrEmpty())
+            if (query.startDate != null)
                 conditions = cb.and(
-                    conditions, cb.greaterThanOrEqualTo(root.get(Statistic_.datestamp), LocalDate.parse(query.startDate))
+                    conditions, cb.greaterThanOrEqualTo(root.get(Statistic_.datestamp), query.startDate)
                 )
 
-            if (!query.endDate.isNullOrEmpty())
+            if (query.endDate != null)
                 conditions = cb.and(
-                    conditions, cb.lessThanOrEqualTo(root.get(Statistic_.datestamp), LocalDate.parse(query.endDate))
+                    conditions, cb.lessThanOrEqualTo(root.get(Statistic_.datestamp), query.endDate)
                 )
 
             cb.and(conditions)

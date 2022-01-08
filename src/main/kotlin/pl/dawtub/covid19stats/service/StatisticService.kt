@@ -7,6 +7,6 @@ import pl.dawtub.covid19stats.model.request.StatisticQuery
 interface StatisticService {
     fun findAll(): List<Statistic>
     fun findAllWithQuery(query: StatisticQuery): List<Statistic>
-    fun findOne(id: Long): Statistic?
+    fun findDaily(): Statistic
     fun save(csvFile: MultipartFile)
 }

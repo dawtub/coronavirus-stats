@@ -1,6 +1,5 @@
 package pl.dawtub.covid19stats.service.impl
 
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import pl.dawtub.covid19stats.model.Death
@@ -16,6 +15,8 @@ import pl.dawtub.covid19stats.repository.specification.StatisticFilter.withQuery
 import pl.dawtub.covid19stats.repository.specification.StatisticFilter.withRegionName
 import pl.dawtub.covid19stats.service.ImportService
 import pl.dawtub.covid19stats.service.StatisticService
+import pl.dawtub.covid19stats.service.impl.StatisticServiceImpl.Const.COUNTRY
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -40,8 +41,18 @@ internal class StatisticServiceImpl(
             .findAll(withQuery(query))
     }
 
-    override fun findOne(id: Long): Statistic? {
-        return statisticRepository.findByIdOrNull(id)
+    override fun findDaily(): Statistic {
+        return statisticRepository
+            .findOne(
+                withQuery(
+                    StatisticQuery(
+                        COUNTRY,
+                        dailyNow(),
+                        dailyNow()
+                    )
+                )
+            )
+            .orElse(null)
     }
 
     override fun save(csvFile: MultipartFile) {
@@ -69,6 +80,15 @@ internal class StatisticServiceImpl(
                     regionRepository.findOne(byName(it.region)).get(),
                 )
             )
+        }
+    }
+
+    private fun dailyNow(): LocalDate {
+        val now = LocalDate.now()
+        return when (now.dayOfWeek) {
+            DayOfWeek.SATURDAY -> now.minusDays(1)
+            DayOfWeek.SUNDAY -> now.minusDays(2)
+            else -> now
         }
     }
 }
