@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root
 object StatisticFilter {
     fun withRegionName(name: String): Specification<Statistic> =
         Specification { root: Root<Statistic>, _, cb ->
-            val join: Join<Statistic, Region> = root.join("region")
+            val join: Join<Statistic, Region> = root.join(Statistic_.REGION)
             cb.equal(join.get(Region_.name), name.lowercase())
         }
 
@@ -20,7 +20,7 @@ object StatisticFilter {
         Specification { root: Root<Statistic>, _, cb ->
             var conditions = cb.conjunction()
             if (!query.region.isNullOrEmpty()) {
-                val join: Join<Statistic, Region> = root.join("region")
+                val join: Join<Statistic, Region> = root.join(Statistic_.REGION)
                 conditions = cb.and(conditions, cb.equal(join.get(Region_.name), query.region))
             }
 

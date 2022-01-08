@@ -24,7 +24,7 @@ internal class StatisticController(
                 DailyStatisticDto(
                     it.datestamp,
                     it.infections,
-                    it.healths,
+                    it.recovers,
                     it.deaths.deathAmount,
                     it.tests.testAmount
                 )
@@ -38,7 +38,7 @@ internal class StatisticController(
             daily.datestamp,
             daily.region.name,
             daily.infections,
-            daily.healths,
+            daily.recovers,
             daily.deaths.deathAmount,
             daily.deaths.deathCovidOnly,
             daily.deaths.deathCovidOther,
@@ -60,7 +60,7 @@ internal class StatisticController(
                     it.datestamp,
                     it.region.name,
                     it.infections,
-                    it.healths,
+                    it.recovers,
                     it.deaths.deathAmount,
                     it.deaths.deathCovidOnly,
                     it.deaths.deathCovidOther,

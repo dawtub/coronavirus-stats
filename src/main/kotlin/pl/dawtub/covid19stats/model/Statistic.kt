@@ -13,7 +13,7 @@ data class Statistic(
     val infections: Int,
 
     @Column
-    val healths: Int,
+    val recovers: Int,
 
     @OneToOne
     @JoinColumn(name = "deathsId")

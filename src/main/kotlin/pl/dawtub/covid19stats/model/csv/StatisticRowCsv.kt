@@ -32,5 +32,5 @@ data class StatisticRowCsv(
     @JsonProperty("liczba_pozostalych_testow")
     val testsOther: Int,
     @JsonProperty("liczba_ozdrowiencow")
-    val amountOfHealth: Int,
+    val recovers: Int,
 )

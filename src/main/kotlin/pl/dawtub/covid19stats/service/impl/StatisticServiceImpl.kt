@@ -61,7 +61,7 @@ internal class StatisticServiceImpl(
                 Statistic(
                     LocalDate.parse(it.date, DateTimeFormatter.ISO_DATE),
                     it.infections,
-                    it.amountOfHealth,
+                    it.recovers,
                     deathRepository.save(
                         Death(
                             it.deaths,

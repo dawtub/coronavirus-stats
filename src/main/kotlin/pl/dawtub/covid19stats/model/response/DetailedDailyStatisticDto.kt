@@ -6,7 +6,7 @@ data class DetailedDailyStatisticDto(
     val datestamp: LocalDate,
     val region: String,
     val infections: Int,
-    val health: Int,
+    val recovers: Int,
     val deathsAmount: Int,
     val deathsCovid: Int,
     val deathsCovidOther: Int,
