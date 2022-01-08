@@ -32,7 +32,7 @@ object StatisticFilter {
 
             if (!query.startDate.isNullOrEmpty())
                 conditions = cb.and(
-                    conditions, cb.lessThanOrEqualTo(root.get(Statistic_.datestamp), LocalDate.parse(query.startDate))
+                    conditions, cb.greaterThanOrEqualTo(root.get(Statistic_.datestamp), LocalDate.parse(query.startDate))
                 )
 
             if (!query.endDate.isNullOrEmpty())
