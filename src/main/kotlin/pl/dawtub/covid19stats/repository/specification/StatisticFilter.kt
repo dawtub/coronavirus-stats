@@ -11,13 +11,14 @@ import javax.persistence.criteria.Root
 
 object StatisticFilter {
     fun withRegionName(name: String): Specification<Statistic> =
-        Specification { root: Root<Statistic>, _, cb ->
+        Specification { root: Root<Statistic>, qb, cb ->
             val join: Join<Statistic, Region> = root.join(Statistic_.REGION)
+            qb.orderBy(cb.desc(root.get(Statistic_.datestamp)))
             cb.equal(join.get(Region_.name), name.lowercase())
         }
 
     fun withQuery(query: StatisticQuery): Specification<Statistic> =
-        Specification { root: Root<Statistic>, _, cb ->
+        Specification { root: Root<Statistic>, qb, cb ->
             var conditions = cb.conjunction()
             if (!query.region.isNullOrEmpty()) {
                 val join: Join<Statistic, Region> = root.join(Statistic_.REGION)
@@ -34,6 +35,7 @@ object StatisticFilter {
                     conditions, cb.lessThanOrEqualTo(root.get(Statistic_.datestamp), query.endDate)
                 )
 
+            qb.orderBy(cb.desc(root.get(Statistic_.datestamp)))
             cb.and(conditions)
         }
 }

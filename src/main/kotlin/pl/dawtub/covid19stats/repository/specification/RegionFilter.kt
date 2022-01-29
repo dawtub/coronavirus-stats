@@ -7,7 +7,8 @@ import javax.persistence.criteria.Root
 
 object RegionFilter {
     fun byName(name: String): Specification<Region> =
-        Specification { root: Root<Region>, _, cb ->
+        Specification { root: Root<Region>, qb, cb ->
+            qb.orderBy(cb.desc(root.get(Region_.name)))
             cb.equal(root.get(Region_.name), name.lowercase())
         }
 }
