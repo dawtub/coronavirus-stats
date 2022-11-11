@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:13-alpine
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=covid19_stats
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  backend:
+    image: coronavirus-stats-api
+    hostname: backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/covid19_stats
+
+  fetcher:
+    image: coronavirus-stats-fetcher
+    hostname: fetcher
+    ports:
+      - "8081:8081"
+    environment:
+      - CORONAVIRUS_STATS_API_URL=http://backend:8080/stats

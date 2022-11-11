@@ -1,5 +1,6 @@
 package pl.dawtub.covid19stats
 
+import org.springframework.boot.Banner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
@@ -7,5 +8,7 @@ import org.springframework.boot.runApplication
 class Covid19StatsApplication
 
 fun main(args: Array<String>) {
-    runApplication<Covid19StatsApplication>(*args)
+    runApplication<Covid19StatsApplication>(*args) {
+        setBannerMode(Banner.Mode.OFF)
+    }
 }
